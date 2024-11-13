@@ -4,14 +4,12 @@
 #define noRows 2
 #define noCols 3
 // PROTOTYPES
-// void print_array(int array[], int length);
-// void print_matrix(int mat[][nCols], int rows);
 bool isValid(const int arr[],int length, int pos);
 void remove_element(int arr[],int length, int pos);
 void insert_element(int arr[],int length, int pos, int value);
 void reshape(const int arr[], int length, int nRows, int nCols, int arr2d[nRows][nCols]);
 void trans_matrix(int nRows, int nCols, const int mat[nRows][nCols], int transpose_mat[nCols][ nRows]);
-// bool found_duplicate(int arr[],int length, ….);
+bool found_duplicate(int arr[],int length);
 
 
 int main()
@@ -20,11 +18,13 @@ int arr[SIZE];
 for (int i = 0; i < SIZE; i++){
       arr[i] = (i+1) * 10;
 }
+arr[0] = 10;
+arr[1] = 10;
 int arr2d[noRows][noCols];
 int no;
 int value = 80;
 int func;
-printf("Which function do you want use on the array \n (1- remove element 2- insert element 3-reshape 4-trans_matrix)\n");
+printf("Which function do you want use on the array \n (1- remove element 2- insert element 3-reshape 4-trans_matrix 5-Duplicate_arr)\n");
 scanf("%d",&func);
 
 if (func == 1 || func == 2){
@@ -65,6 +65,13 @@ else if (func == 4){
    }
    printf("\n");
 }
+}
+else if (func == 5){
+   if (found_duplicate(arr, SIZE))
+   printf("Array has duplicate values\n");
+   else {
+      printf("Array has no duplicate elements");
+   }
 }
   
 
@@ -115,4 +122,13 @@ void trans_matrix(int nRows, int nCols, const int mat[nRows][nCols], int transpo
    }
 }
 }
-// bool found_duplicate(int arr[],int length, ….)
+
+bool found_duplicate(int arr[],int length){
+   for (int i = 0; i < length; i++){
+      for (int j = i+1; j < length; j++){
+         if (arr[i] == arr[j])
+         return true;
+      }
+   }
+   return false;
+}
