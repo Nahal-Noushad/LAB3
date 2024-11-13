@@ -4,9 +4,10 @@
 int main(void){
     int k = 0;
     int balance = 1000;
-    int transactions[] = {200, -150, -500, -400, -50, -100, 300, 400};
+    int transactions[] = {200, -150, -500, -400, -50, -100, 300, 500};
+    int length = sizeof(transactions) / sizeof(transactions[0]);
     int tobeprocessed[10];
-    for (int i = 0; i < 7; i++){
+    for (int i = 0; i < length; i++){
         if (transactions[i] >= 0)
         balance = balance + transactions[i];
     if (transactions[i] < 0){
@@ -19,8 +20,12 @@ int main(void){
         balance = balance + transactions[i];
         }
         if (balance == 0){
-            tobeprocessed[k] =  transactions[i+1];
+            for (int m = i; m <= length; m++){
+            tobeprocessed[k] =  transactions[m+1];
             k++;
+            }
+            k = k - 2;
+            printf("No further transactions can be processed\n");
             break;
         }
         
