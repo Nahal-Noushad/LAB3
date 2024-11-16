@@ -43,6 +43,7 @@ int main() {
         display_menu();
         printf("Enter your choice: ");
         scanf("%d", &choice);
+        getchar(); // Clear the newline character left in the input buffer
 
         if (choice == 1) {
             enroll_club();
@@ -78,7 +79,13 @@ void enroll_club() {
 
     char new_team_name[21];
     printf("Enter club name (max 20 characters): ");
-    scanf(" %[^\n]s", new_team_name);
+    fgets(new_team_name, sizeof(new_team_name), stdin);
+
+    // Handle newline character
+    size_t len = strlen(new_team_name);
+    if (len > 0 && new_team_name[len - 1] == '\n') {
+        new_team_name[len - 1] = '\0';
+    }
 
     // Check for duplicate team name
     for (int i = 0; i < enrolled_teams; i++) {
@@ -108,6 +115,7 @@ void add_player() {
 
     int club_index;
     scanf("%d", &club_index);
+    getchar(); // Clear the newline character left in the input buffer
     club_index--;
 
     if (club_index < 0 || club_index >= enrolled_teams) {
@@ -122,13 +130,26 @@ void add_player() {
 
     player_t new_player;
     printf("Enter player name (max 25 characters): ");
-    scanf(" %[^\n]s", new_player.name);
+    fgets(new_player.name, sizeof(new_player.name), stdin);
+    // Handle newline character
+    size_t len = strlen(new_player.name);
+    if (len > 0 && new_player.name[len - 1] == '\n') {
+        new_player.name[len - 1] = '\0';
+    }
+
     printf("Enter kit number (1-99): ");
     scanf("%d", &new_player.kit_number);
+    getchar(); // Clear the newline character left in the input buffer
     printf("Enter date of birth (DD MM YYYY): ");
     scanf("%d %d %d", &new_player.age.day, &new_player.age.month, &new_player.age.year);
+    getchar(); // Clear the newline character left in the input buffer
     printf("Enter position (max 15 characters): ");
-    scanf(" %[^\n]s", new_player.position);
+    fgets(new_player.position, sizeof(new_player.position), stdin);
+    // Handle newline character
+    len = strlen(new_player.position);
+    if (len > 0 && new_player.position[len - 1] == '\n') {
+        new_player.position[len - 1] = '\0';
+    }
 
     // Assign the player's club to the current team's name
     strcpy(new_player.club, teams[club_index].team_name);
@@ -159,9 +180,15 @@ void search_update() {
     bool found = false;
 
     printf("Enter player name to search: ");
-    scanf(" %[^\n]s", search_name);
+    fgets(search_name, sizeof(search_name), stdin);
+    // Handle newline character
+    size_t len = strlen(search_name);
+    if (len > 0 && search_name[len - 1] == '\n') {
+        search_name[len - 1] = '\0';
+    }
     printf("Enter kit number to search: ");
     scanf("%d", &search_kit_number);
+    getchar(); // Clear the newline character left in the input buffer
 
     for (int i = 0; i < enrolled_teams; i++) {
         for (int j = 0; j < teams[i].active_size; j++) {
@@ -179,10 +206,17 @@ void search_update() {
                 // Update player details
                 printf("Enter new kit number (1-99): ");
                 scanf("%d", &teams[i].players[j].kit_number);
+                getchar(); // Clear the newline character left in the input buffer
                 printf("Enter new position (max 15 characters): ");
-                scanf(" %[^\n]s", teams[i].players[j].position);
+                fgets(teams[i].players[j].position, sizeof(teams[i].players[j].position), stdin);
+                // Handle newline character
+                len = strlen(teams[i].players[j].position);
+                if (len > 0 && teams[i].players[j].position[len - 1] == '\n') {
+                    teams[i].players[j].position[len - 1] = '\0';
+                }
                 printf("Enter new date of birth (DD MM YYYY): ");
                 scanf("%d %d %d", &teams[i].players[j].age.day, &teams[i].players[j].age.month, &teams[i].players[j].age.year);
+                getchar(); // Clear the newline character left in the input buffer
 
                 printf("Player updated successfully.\n");
                 return;
